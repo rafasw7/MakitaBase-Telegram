@@ -228,12 +228,6 @@ WhatsApp: +55 62 8205-3713
 
 ---
 
-## Licença
-
-Distribuído sob a licença MIT. Veja o arquivo LICENSE para detalhes.
-
----
-
 <p align="center">
   <img src="assets/makita-telegram.gif" alt="Makita em obra - animado" width="420" style="border-radius: 12px;">
 </p>

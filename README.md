@@ -1,98 +1,145 @@
-Makita Telegram Bot
+# Makita Telegram Bot
 
-Um bot de Telegram feito em Node.js usando Telegraf, com foco em desempenho, estabilidade e personalização.
+![Makita Logo](https://github.com/user-attachments/assets/b662c226-f336-4dd1-980d-cfe52fb158f1)
 
+[![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)]()
+[![Telegraf](https://img.shields.io/badge/Telegraf-0088cc?style=for-the-badge&logo=telegram&logoColor=white)]()
+[![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)]()
 
----
-
-Guia Completo de Instalação e Configuração
-
-1️⃣ Criando o Bot no BotFather
-
-1. Abre o Telegram e procura por @BotFather
-
-
-2. Digita /start
-
-
-3. Digita /newbot
-
-
-4. Escolhe um nome pro bot (ex: Makita Telegram)
-
-
-5. Escolhe um username que termine com 'bot' (ex: MakitaBot)
-
-
-6. Copia o token que ele te envia, que será usado no arquivo .env
-
-
-
+Um bot para Telegram feito em Node.js com Telegraf — focado em desempenho, estabilidade e fácil personalização. Inspirado na Makita Base, esta base é simples de usar e fácil de estender.
 
 ---
 
-2️⃣ Instalando dependências no Termux
+## Índice
 
+- Sobre
+- Recursos
+- Guia de instalação
+  - Criar o bot no BotFather
+  - Instalar dependências (Termux)
+  - Clonar o repositório
+  - Instalar módulos do projeto
+  - Criar o arquivo .env
+- Estrutura do projeto
+- Código base (makita.js)
+- Executar o bot
+- Comandos de exemplo
+- Contribuição
+- Autor & Contato
+- Licença
+
+---
+
+## Sobre
+
+Esta base fornece um ponto de partida leve e estável para criar bots de Telegram usando Telegraf. Ideal para automações, utilitários, bots interativos e protótipos rápidos, mantendo código organizado para fácil manutenção e expansão.
+
+---
+
+## Recursos
+
+- Inicialização e parada segura (tratamento de SIGINT/SIGTERM)
+- Comando de ping com latência e uptime
+- Estrutura simples para adicionar comandos e middlewares
+- Fácil configuração via arquivo .env
+- Compatível com Termux (com instruções para --no-bin-links)
+
+---
+
+## 1) Criando o bot no BotFather
+
+1. Abra o Telegram e procure por @BotFather  
+2. Digite /start  
+3. Digite /newbot  
+4. Escolha um nome para o bot (ex: Makita Telegram)  
+5. Escolha um username que termine com "bot" (ex: MakitaBot)  
+6. Copie o token enviado pelo BotFather — será usado no arquivo .env
+
+---
+
+## 2) Instalando dependências no Termux
+
+No Termux execute:
+
+```bash
 pkg update && pkg upgrade -y
 pkg install nodejs git -y
-
+```
 
 ---
 
-3️⃣ Clonando o repositório
+## 3) Clonando o repositório
 
+Via SSH:
+```bash
 cd ~
 git clone git@github.com:Rafasw7/Makita-Telegram.git
 cd Makita-Telegram
+```
 
-Se não estiver usando SSH, pode clonar via HTTPS:
-
+Via HTTPS:
+```bash
 git clone https://github.com/Rafasw7/Makita-Telegram.git
 cd Makita-Telegram
-
+```
 
 ---
 
-4️⃣ Instalando os módulos do projeto
+## 4) Instalando os módulos do projeto
 
-No Termux às vezes rola problema com links simbólicos, então use o parâmetro --no-bin-links:
+Se não houver package.json, instale o Telegraf e dotenv:
 
+```bash
 npm install --no-bin-links telegraf dotenv
+```
 
-Se houver package.json, basta usar:
+Se já houver package.json:
 
+```bash
 npm install --no-bin-links
+```
 
+(O parâmetro --no-bin-links ajuda em ambientes como Termux que podem ter problemas com links simbólicos.)
 
 ---
 
-5️⃣ Criando e editando o arquivo .env
+## 5) Criando e editando o arquivo .env
 
+Crie o arquivo `.env` na raiz do projeto:
+
+```bash
 nano .env
+```
 
-Adicione o seguinte conteúdo:
+Adicione:
 
+```
 BOT_TOKEN=SEU_TOKEN_AQUI
+```
 
-Salva e sai com CTRL + O → Enter, depois CTRL + X.
+Salve e saia (CTRL+O → Enter, CTRL+X no nano).
 
+> Dica de segurança: nunca compartilhe o token publicamente e não o commite em repositórios públicos.
 
 ---
 
-6️⃣ Estrutura básica do projeto
+## Estrutura básica do projeto
 
+```
 Makita-Telegram/
 ├── node_modules/
+├── assets/                 # GIFs, imagens e outros recursos
 ├── .env
 ├── package.json
-├── index.js
-└── README.txt
-
+├── makita.js
+└── README.md
+```
 
 ---
 
-7️⃣ Código base do bot (index.js)
+## Código base (makita.js)
 
+```javascript
 const { Telegraf } = require('telegraf');
 require('dotenv').config();
 
@@ -108,20 +155,26 @@ const getUptime = () => {
   return `${d}d ${h % 24}h ${m % 60}m ${s % 60}s`;
 };
 
-bot.start((ctx) => ctx.reply('🤖 Olá! O Makita Bot está online!'));
+bot.start((ctx) => ctx.reply('🤖 Olá! O Makita Telegram está online!'));
+
 bot.command('ping', async (ctx) => {
-  const latency = Date.now() - ctx.message.date * 1000;
+  const latency = Date.now() - (ctx.message.date * 1000);
   const msg = await ctx.replyWithHTML('<i>Calculando...</i>', { reply_to_message_id: ctx.message.message_id });
 
   setTimeout(async () => {
-    await ctx.telegram.editMessageText(
-      ctx.chat.id,
-      msg.message_id,
-      undefined,
-      `🏓 <b>Pong!</b>\n\n⏱️ <b>Latência:</b> ${latency}ms\n⏰ <b>Uptime:</b> ${getUptime()}`,
-      { parse_mode: 'HTML' }
-    );
-  }, 1000);
+    try {
+      await ctx.telegram.editMessageText(
+        ctx.chat.id,
+        msg.message_id,
+        undefined,
+        `🏓 <b>Pong!</b>\n\n⏱️ <b>Latência:</b> ${latency}ms\n⏰ <b>Uptime:</b> ${getUptime()}`,
+        { parse_mode: 'HTML' }
+      );
+    } catch (err) {
+      // Se editar falhar (mensagem removida/etc), apenas envie uma resposta nova
+      await ctx.replyWithHTML(`🏓 <b>Pong!</b>\n\n⏱️ <b>Latência:</b> ${latency}ms\n⏰ <b>Uptime:</b> ${getUptime()}`);
+    }
+  }, 800);
 });
 
 bot.launch()
@@ -130,30 +183,57 @@ bot.launch()
 
 process.once('SIGINT', () => bot.stop('SIGINT'));
 process.once('SIGTERM', () => bot.stop('SIGTERM'));
-
+```
 
 ---
 
-8️⃣ Iniciando o bot
+## Executando o bot
 
-node index.js
+```bash
+node makita.js
+```
 
 Se aparecer:
-
+```
 🤖 Bot iniciado com sucesso!
-
-O bot está online!
-
-
----
-
-👨‍💻 Autor
-
-Feito com ❤️ por Rafasw7.
-
+```
+— então o bot está online.
 
 ---
 
-🪪 Licença
+## Comandos de exemplo
 
-Este projeto é distribuído sob a licença MIT.
+- /ping — verifica latência e uptime
+
+Adicione novos comandos em makita.js ou em módulos separados, usando middlewares do Telegraf para organização.
+
+---
+
+## Contribuição
+
+Contribuições são bem-vindas! Sugestões:
+- Abra uma issue descrevendo o que deseja ou o bug encontrado
+- Faça um fork, crie uma branch com sua feature/fix e abra um pull request
+- Mantenha o token e dados sensíveis fora do repo
+
+Se quiser posso criar um arquivo CONTRIBUTING.md com um guia padrão.
+
+---
+
+## Autor & Contato
+
+Feito com ❤️ por Rafasw7 (Raphael)  
+Instagram: @rafasw7
+WhatsApp: +55 62 8205-3713
+
+---
+
+## Licença
+
+Distribuído sob a licença MIT. Veja o arquivo LICENSE para detalhes.
+
+---
+
+<p align="center">
+  <img src="assets/makita-telegram.gif" alt="Makita em obra - animado" width="420" style="border-radius: 12px;">
+</p>

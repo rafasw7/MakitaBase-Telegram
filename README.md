@@ -223,8 +223,8 @@ Se quiser posso criar um arquivo CONTRIBUTING.md com um guia padrão.
 ## Autor & Contato
 
 Feito com ❤️ por Rafasw7 (Raphael)  
-Instagram: @rafasw7
-WhatsApp: +55 62 8205-3713
+Instagram: @rafasw7 
+WhatsApp: +55 62 8205-3713 
 
 ---
 

@@ -229,5 +229,5 @@ WhatsApp: +55 62 8205-3713
 ---
 
 <p align="center">
-  <img src="assets/makita-telegram.gif" alt="Makita em obra - animado" width="420" style="border-radius: 12px;">
+  <img src="https://media4.giphy.com/media/v1.Y2lkPTZjMDliOTUycWZnbDJraTd3dDc2ZmhrYmJzand2eDQwY2FveHp2bDRpYnNpZjh0NSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/jwCEr6Dffv0DyrrABB/giphy.gif" alt="Makita em obra - animado" width="420" style="border-radius: 12px;">
 </p>
